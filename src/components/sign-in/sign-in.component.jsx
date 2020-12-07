@@ -43,7 +43,7 @@ class SignIn extends React.Component {
           />
           <FormInput
             name="password"
-            type="password"
+            type="current-password"
             value={this.state.password}
             handleChange={this.handleChange}
             label="password"
