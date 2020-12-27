@@ -19,7 +19,7 @@ const CollectionItem = ({ item, addItemToCart }) => {
       <ImageContainer className="image" imageUrl={imageUrl} />
       <CollectionFooterContainer>
         <NameContainer> {name} </NameContainer>
-        <PriceContainer> {price} </PriceContainer>
+        <PriceContainer> {`$${price}`} </PriceContainer>
       </CollectionFooterContainer>
 
       <AddButton onClick={() => addItemToCart(item)} isInverted>
