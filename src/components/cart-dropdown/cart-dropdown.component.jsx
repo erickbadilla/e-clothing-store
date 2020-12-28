@@ -1,5 +1,9 @@
 import React from "react";
-import { CardDropdownContainer, CartItemsContainer} from "./cart-dropdown.styles";
+import {
+  CardDropdownContainer,
+  CartItemsContainer,
+  TextContainer,
+} from "./cart-dropdown.styles";
 
 import { createStructuredSelector } from "reselect";
 import { withRouter } from "react-router-dom";
@@ -21,7 +25,7 @@ const CartDropdown = ({ cartItems, history, dispatch }) => (
           <CartItem key={cartItem.id} item={cartItem} />
         ))
       ) : (
-        <span>Your cart is empty</span>
+        <TextContainer>Your cart is empty</TextContainer>
       )}
     </CartItemsContainer>
     <CustomButton
@@ -32,7 +36,7 @@ const CartDropdown = ({ cartItems, history, dispatch }) => (
     >
       GO TO CHECKOUT
     </CustomButton>
-  </ CardDropdownContainer>
+  </CardDropdownContainer>
 );
 
 const mapStateToProps = createStructuredSelector({
