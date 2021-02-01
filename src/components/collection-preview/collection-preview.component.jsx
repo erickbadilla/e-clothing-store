@@ -6,9 +6,9 @@ import {
 } from "./collection-preview.styles";
 
 import CollectionItem from "../collection-item/collection-item.component";
-const CollectionPreview = ({ title, items }) => (
+const CollectionPreview = ({ title, items, routeName, match }) => (
   <ColletionPreviewContainer>
-    <TitleContainer>{title.toUpperCase()}</TitleContainer>
+    <TitleContainer to={`/shop/${routeName}`}>{title}</TitleContainer>
     <PreviewContainer>
       {items
         .filter((item, idx) => idx < 4)
