@@ -6,7 +6,7 @@ import {
 } from "./collection-preview.styles";
 
 import CollectionItem from "../collection-item/collection-item.component";
-const CollectionPreview = ({ title, items, routeName, match }) => (
+const CollectionPreview = ({ title, items, routeName }) => (
   <ColletionPreviewContainer>
     <TitleContainer to={`/shop/${routeName}`}>{title}</TitleContainer>
     <PreviewContainer>
