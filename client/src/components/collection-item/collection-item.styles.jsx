@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import CustomButton from "../custom-button/custom-button.component";
 
+
 export const CollectionItemContainer = styled.div`
   width: 22vw;
   display: flex;
@@ -20,11 +21,25 @@ export const CollectionItemContainer = styled.div`
       display: flex;
     }
   }
+
+  @media screen and (max-width: 800px) {
+    width: 40vw;
+
+    &:hover {
+      .image {
+        opacity: unset;
+      }
+
+      button {
+        opacity: unset;
+      }
+    }
+  }
 `;
 
 const getImageUrl = ({ imageUrl }) => imageUrl;
 
-export const ImageContainer = styled.div` 
+export const ImageContainer = styled.div`
   width: 100%;
   height: 95%;
   background-size: cover;
@@ -34,21 +49,34 @@ export const ImageContainer = styled.div`
 `;
 
 export const NameContainer = styled.span`
-  width: 90%;
+  width: 70%;
   margin-bottom: 15px;
 `;
 
 export const PriceContainer = styled.span`
-  width: 10%;
+  width: 30%;
   text-align: right;
 `;
 
 export const CollectionFooterContainer = styled.div`
   width: 100%;
-  height: 5%;
+  height: 6%;
   display: flex;
   justify-content: space-between;
   font-size: 18px;
+
+ @media screen and (max-width: 1250px) {
+    font-size: 16px;
+  }
+
+  @media screen and (max-width: 1320px) {
+    font-size: 15px;
+  }
+ 
+
+  @media screen and (max-width: 1080px) {
+    padding-left: 8px;
+  }
 `;
 
 export const AddButton = styled(CustomButton)`
@@ -57,4 +85,15 @@ export const AddButton = styled(CustomButton)`
   position: absolute;
   top: 255px;
   display: none;
+
+  @media screen and (max-width: 800px) {
+    display: block;
+    opacity: 0.9;
+    min-width: unset;
+    padding: 0 10px;
+
+    @media screen and (max-width: 385px) {
+      font-size: 11px;
+    }
+  }
 `;

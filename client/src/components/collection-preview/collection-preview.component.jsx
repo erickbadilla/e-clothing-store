@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import {
   ColletionPreviewContainer,
   TitleContainer,
@@ -6,9 +7,11 @@ import {
 } from "./collection-preview.styles";
 
 import CollectionItem from "../collection-item/collection-item.component";
-const CollectionPreview = ({ title, items, routeName }) => (
+const CollectionPreview = ({ title, items, routeName, history, match }) => (
   <ColletionPreviewContainer>
-    <TitleContainer to={`/shop/${routeName}`}>{title}</TitleContainer>
+    <TitleContainer onClick={() => history.push(`${match.url}/${routeName}`)}>
+      {title}
+    </TitleContainer>
     <PreviewContainer>
       {items
         .filter((item, idx) => idx < 4)
@@ -19,4 +22,4 @@ const CollectionPreview = ({ title, items, routeName }) => (
   </ColletionPreviewContainer>
 );
 
-export default CollectionPreview;
+export default withRouter(CollectionPreview);

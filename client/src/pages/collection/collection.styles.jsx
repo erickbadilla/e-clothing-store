@@ -18,4 +18,9 @@ export const ItemsContainer = styled.div`
   & > div {
     margin-bottom: 30px;
   }
+
+  @media screen and (max-width: 800px) {
+    justify-items: center;
+    grid-template-columns: 1fr 1fr;
+  }
 `;
