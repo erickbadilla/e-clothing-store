@@ -35,7 +35,6 @@ export const MenuItemContainer = styled.div`
   @media screen and (max-width: 800px) {
     height: 200px;
   }
-  
 `;
 
 export const BackgroundImageContainer = styled.div`
@@ -52,11 +51,20 @@ export const TitleContainer = styled.h1`
   margin-bottom: 6px;
   font-size: 22px;
   color: #4a4a4a;
+
+  @media only screen and (max-width: 750px) {
+    font-size: 21px;
+  }
 `;
 
 export const SubTitleContainer = styled.span`
   font-weight: lighter;
   font-size: 16px;
+  text-align: center;
+
+  @media only screen and (max-width: 750px) {
+    font-size: 15px;
+  }
 `;
 
 export const ContentContainer = styled.div`
@@ -70,4 +78,9 @@ export const ContentContainer = styled.div`
   background-color: white;
   opacity: 0.7;
   position: absolute;
+
+  @media only screen and (max-width: 750px) {
+    width: 110px;
+    padding: 0 auto;
+  }
 `;
