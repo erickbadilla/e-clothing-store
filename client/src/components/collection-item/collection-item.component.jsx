@@ -33,4 +33,4 @@ const mapDispatchToProps = (dispatch) => ({
   addItemToCart: (item) => dispatch(addItemToCart(item)),
 });
 
-export default connect(null, mapDispatchToProps)(CollectionItem);
+export default React.memo(connect(null, mapDispatchToProps)(CollectionItem));

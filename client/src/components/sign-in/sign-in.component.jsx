@@ -77,4 +77,4 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(emailSignInStart({ email, password })),
 });
 
-export default connect(null, mapDispatchToProps)(SignIn);
+export default React.memo(connect(null, mapDispatchToProps)(SignIn));

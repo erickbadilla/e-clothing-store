@@ -10,7 +10,6 @@ import { selectCartItemsCount } from "../../redux/cart/cart.selectors";
 const CartIcon = ({ toggleCartHidden, itemCount }) => (
   <IconContainer onClick={toggleCartHidden}>
     <ShoppingIcon />
-
     <span>{itemCount}</span>
   </IconContainer>
 );

@@ -6,7 +6,7 @@ import {
   ErrorImageText,
 } from "./error-boundary.styles";
 
-class ErrorBoundary extends React.Component {
+class ErrorBoundary extends React.PureComponent {
   constructor(props) {
     super(props);
 
