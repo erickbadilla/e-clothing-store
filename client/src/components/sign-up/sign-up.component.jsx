@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { SignUpContainer, TitleContainer } from "./sign-up.styles";
+import {
+  SignUpContainer,
+  TitleContainer,
+  ButtonContainer,
+} from "./sign-up.styles";
 
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
@@ -74,7 +78,9 @@ const SignUp = ({ signUpStart }) => {
           required
         />
 
-        <CustomButton type="submit">SIGN UP</CustomButton>
+        <ButtonContainer>
+          <CustomButton type="submit">SIGN UP</CustomButton>
+        </ButtonContainer>
       </form>
     </SignUpContainer>
   );
