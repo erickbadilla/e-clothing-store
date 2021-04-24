@@ -13,26 +13,26 @@ import {
 
 export function* fetchCollectionsAsync() {
   try {
-    const collectionRef = firestore.collection("collections");
+    const collectionRef = yield firestore.collection("collections");
     const collectionSnap = yield collectionRef.get();
     const collectionsMap = yield call(
       convertColletionsSnapshotToMap,
       collectionSnap
     );
+    console.log("entre");
     yield put(fetchCollectionsSuccess(collectionsMap));
   } catch (error) {
     yield put(fetchCollectionFailure(error.message));
   }
-
 }
 
-export function* fetchCollectionsStart() {
+export function* onFetchColletionsStart() {
   yield takeLatest(
     ShopActionsTypes.FETCH_COLLECTIONS_START,
     fetchCollectionsAsync
   );
 }
 
-export function* shopSagas(){
-  yield all([call(fetchCollectionsStart)])
+export function* shopSagas() {
+  yield all([call(onFetchColletionsStart)]);
 }
