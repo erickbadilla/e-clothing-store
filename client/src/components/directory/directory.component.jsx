@@ -1,6 +1,5 @@
 import React from "react";
 import { DirectoryContainer } from "./directory.styles";
-import "./directory.styles.scss";
 import MenuItem from "../menu-item/menu-item.component";
 
 import { connect } from "react-redux";

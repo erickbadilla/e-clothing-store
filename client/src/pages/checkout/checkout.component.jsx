@@ -6,7 +6,6 @@ import {
   TotalContainer,
   TestWarningContainer,
 } from "./checkout.styles";
-import "./checkout.styles.scss";
 
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
