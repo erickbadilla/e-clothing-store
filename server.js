@@ -18,6 +18,11 @@ app.use(
     extended: true,
   })
 );
+app.use(
+  enforce.HTTPS({
+    trustProtoHeader: true,
+  })
+);
 
 if (process.env.NODE_ENV === "production") {
   app.use(
@@ -35,6 +40,12 @@ if (process.env.NODE_ENV === "production") {
 app.listen(port, (error) => {
   if (error) throw error;
   console.log("Sever running on port " + port);
+});
+
+app.get("/service-worker.js", (request, response) => {
+  response.sendFile(
+    path.resolve(__dirname, "..", "build", "service-worker.js")
+  );
 });
 
 app.post("/payment", (request, response) => {
