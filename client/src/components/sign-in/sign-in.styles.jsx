@@ -8,8 +8,6 @@ export const SignInContainer = styled.div`
   @media screen and (max-width: 1040px) {
     width: 300px;
   }
-
-  
 `;
 
 export const TitleContainer = styled.h2`
