@@ -1,6 +1,8 @@
-import React from "react";
+import React, { lazy } from "react";
 import { HomePageContainer } from "./homepage.styles";
-import Directory from "../../components/directory/directory.component";
+const Directory = lazy(() =>
+  import("../../components/directory/directory.component")
+);
 
 const HomePage = () => (
   <HomePageContainer>
