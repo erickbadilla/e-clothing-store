@@ -4,6 +4,7 @@ import { addItemToCart, removeItemFromCart } from "./cart.utils";
 const INITIAL_STATE = {
   isHidden: true,
   cartItems: [],
+  error: null,
 };
 
 const cartReducer = (state = INITIAL_STATE, action) => {
@@ -38,6 +39,18 @@ const cartReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cartItems: [],
+      };
+
+    case CartActionsTypes.GET_CART_FROM_FIREBASE_SUCCESS:
+      return {
+        ...state,
+        cartItems: action.payload,
+      };
+
+    case CartActionsTypes.GET_CART_FROM_FIREBASE_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
       };
 
     default:

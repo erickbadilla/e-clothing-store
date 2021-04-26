@@ -76,6 +76,18 @@ export const convertColletionsSnapshotToMap = (collections) => {
   }, {});
 };
 
+export const getUserCartRef = async (userId) => {
+  const cartsRef = firestore.collection("carts").where("userId", "==", userId);
+  const cartsSnapshot = await cartsRef.get();
+
+  if (cartsSnapshot.empty) {
+    const newCartDocRef = firestore.collection("carts").doc();
+    newCartDocRef.set({ userId, cartItems: [] });
+    return newCartDocRef;
+  }
+  return cartsSnapshot.docs[0].ref;
+};
+
 export const getCurrenctUser = () => {
   return new Promise((resolve, reject) => {
     const unsubscribe = auth.onAuthStateChanged((userAuth) => {
