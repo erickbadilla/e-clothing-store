@@ -1,21 +1,16 @@
-import { takeLatest, put, all, call } from "redux-saga/effects";
+import {all, call, put, takeLatest} from "redux-saga/effects";
 
 import UserActionsTypes from "./user.types";
 import {
-  signInSuccess,
   signInFailure,
-  signOutSuccess,
+  signInSuccess,
   signOutFailure,
+  signOutSuccess,
   signUpFailure,
   signUpSuccess,
 } from "./user.actions";
 
-import {
-  auth,
-  googleProvider,
-  createUserProfileDocument,
-  getCurrenctUser,
-} from "../../firebase/firebase.utils";
+import {auth, createUserProfileDocument, getCurrentUser, googleProvider,} from "../../firebase/firebase.utils";
 
 export function* getSnapshotFromUserAuth(userAuth, additionalData) {
   try {
@@ -59,7 +54,7 @@ export function* onEmailSignInStart() {
 
 export function* isUserAuthenticated() {
   try {
-    const userAuth = yield getCurrenctUser();
+    const userAuth = yield getCurrentUser();
 
     if (!userAuth) return;
     yield getSnapshotFromUserAuth(userAuth);

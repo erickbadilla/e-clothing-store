@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, {css} from "styled-components";
 
 const subColor = "grey";
 const mainColor = "black";
@@ -19,8 +19,8 @@ export const GroupContainer = styled.div`
 `;
 
 export const FormInputContainer = styled.input`
-  background: none;
-  background-color: white;
+  background: white none;
+  //noinspection LessUnresolvedVariable
   color: $sub-color;
   font-size: 18px;
   padding: 10px 10px 10px 5px;

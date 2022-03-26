@@ -10,20 +10,17 @@ const StripeCheckoutButton = ({ price }) => {
   //On success callback function
   const onToken = (token) => {
     axios({
-      url: "payment",
+      url: "/payment",
       method: "post",
       data: {
         amount: priceForStripe,
         token,
       },
     })
-      .then((reponse) => alert("Payment Succesful"))
-      .catch((error) => {
-        console.error("Payment error: ", JSON.parse(error));
-        alert(
-          "There was an issue with your payment. Please sure you use the provided credit cart"
-        );
-      });
+        .then((_response) => alert("Payment Successful"))
+        .catch((_error) => {
+          alert("There was an issue with your payment. Please sure you use the provided credit cart");
+        });
   };
 
   return (

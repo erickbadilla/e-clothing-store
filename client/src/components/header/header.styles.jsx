@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components";
-import { Link } from "react-router-dom";
+import styled, {css} from "styled-components";
+import {Link} from "react-router-dom";
 
 const OptionContainerStyles = css`
   padding: 10px 15px;
@@ -27,7 +27,7 @@ export const LogoContainer = styled(Link)`
 
   @media screen and (max-width: 800px) {
     width: 50px;
-    padding: 0px;
+    padding: 0;
   }
 `;
 

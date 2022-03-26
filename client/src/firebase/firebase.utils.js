@@ -45,22 +45,22 @@ export const googleProvider = new firebase.auth.GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
 export const SignInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
-export const addColletionAndDocument = async (collectionKey, objectsToAdd) => {
-  const colletionRef = firestore.collection(collectionKey);
+export const addCollectionAndDocument = async (collectionKey, objectsToAdd) => {
+  const collectionRef = firestore.collection(collectionKey);
 
   const batch = firestore.batch();
 
   objectsToAdd.forEach((object) => {
-    const newDocumentRef = colletionRef.doc();
+    const newDocumentRef = collectionRef.doc();
     batch.set(newDocumentRef, object);
   });
 
   return await batch.commit();
 };
 
-export const convertColletionsSnapshotToMap = (collections) => {
-  const transformedColletions = collections.docs.map((doc) => {
-    const { title, items } = doc.data();
+export const convertCollectionsSnapshotToMap = (collections) => {
+  const transformedCollections = collections.docs.map((doc) => {
+    const {title, items} = doc.data();
 
     return {
       routeName: encodeURI(title.toLowerCase()),
@@ -70,7 +70,7 @@ export const convertColletionsSnapshotToMap = (collections) => {
     };
   });
 
-  return transformedColletions.reduce((accumulator, collection) => {
+  return transformedCollections.reduce((accumulator, collection) => {
     accumulator[collection.title.toLowerCase()] = collection;
     return accumulator;
   }, {});
@@ -82,13 +82,13 @@ export const getUserCartRef = async (userId) => {
 
   if (cartsSnapshot.empty) {
     const newCartDocRef = firestore.collection("carts").doc();
-    newCartDocRef.set({ userId, cartItems: [] });
+    await newCartDocRef.set({userId, cartItems: []});
     return newCartDocRef;
   }
   return cartsSnapshot.docs[0].ref;
 };
 
-export const getCurrenctUser = () => {
+export const getCurrentUser = () => {
   return new Promise((resolve, reject) => {
     const unsubscribe = auth.onAuthStateChanged((userAuth) => {
       unsubscribe();
