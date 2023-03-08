@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "https://firestore.googleapis.com/(.*)",
+      "source": "firestore.googleapis.com/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         { "key": "Access-Control-Allow-Origin", "value": "*" },
@@ -16,7 +16,7 @@
       ]
     },
     {
-      "source": "https://m.stripe.com/(.*)",
+      "source": "m.stripe.com/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         { "key": "Access-Control-Allow-Origin", "value": "*" },
@@ -31,7 +31,7 @@
       ]
     },
     {
-      "source": "https://q.stripe.com/(.*)",
+      "source": "q.stripe.com/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         { "key": "Access-Control-Allow-Origin", "value": "*" },
