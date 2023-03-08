@@ -1,6 +1,17 @@
-import firebase from "firebase/app";
-import "firebase/firestore";
-import "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  getFirestore,
+  getDoc,
+  doc,
+  collection,
+  writeBatch,
+  query,
+  where,
+  setDoc,
+  limit,
+  getDocs,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB7GLc7Ke49fqiKJoh31jYuUBa6Cs5Tx-Q",
@@ -13,15 +24,18 @@ const firebaseConfig = {
   measurementId: "G-75Q1VKKD9K",
 };
 
-firebase.initializeApp(firebaseConfig);
-export const auth = firebase.auth();
-export const firestore = firebase.firestore();
+const app = initializeApp(firebaseConfig);
 
-export const createUserProfileDocument = async (userAuth, aditionalData) => {
+export const auth = getAuth();
+export const firestore = getFirestore();
+
+export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
-  const userRef = firestore.doc(`users/${userAuth.uid}`);
-  const snapshot = await userRef.get();
+  console.log(userAuth);
+
+  const userRef = doc(firestore, "users", userAuth.uid);
+  const snapshot = await getDoc(userRef);
 
   if (!snapshot.exists) {
     const { displayName, email } = userAuth;
@@ -32,7 +46,7 @@ export const createUserProfileDocument = async (userAuth, aditionalData) => {
         displayName,
         email,
         createdAt,
-        ...aditionalData,
+        ...additionalData,
       });
     } catch (error) {
       console.log("Error creating user", error.message);
@@ -41,17 +55,18 @@ export const createUserProfileDocument = async (userAuth, aditionalData) => {
   return userRef;
 };
 
-export const googleProvider = new firebase.auth.GoogleAuthProvider();
+export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
-export const SignInWithGoogle = () => auth.signInWithPopup(googleProvider);
+
+export const SignInWithGoogle = () => signInWithPopup(auth, googleProvider);
 
 export const addCollectionAndDocument = async (collectionKey, objectsToAdd) => {
-  const collectionRef = firestore.collection(collectionKey);
+  const collectionRef = collection(collectionKey);
 
-  const batch = firestore.batch();
+  const batch = writeBatch(firestore);
 
   objectsToAdd.forEach((object) => {
-    const newDocumentRef = collectionRef.doc();
+    const newDocumentRef = doc(collectionRef);
     batch.set(newDocumentRef, object);
   });
 
@@ -60,7 +75,7 @@ export const addCollectionAndDocument = async (collectionKey, objectsToAdd) => {
 
 export const convertCollectionsSnapshotToMap = (collections) => {
   const transformedCollections = collections.docs.map((doc) => {
-    const {title, items} = doc.data();
+    const { title, items } = doc.data();
 
     return {
       routeName: encodeURI(title.toLowerCase()),
@@ -77,15 +92,20 @@ export const convertCollectionsSnapshotToMap = (collections) => {
 };
 
 export const getUserCartRef = async (userId) => {
-  const cartsRef = firestore.collection("carts").where("userId", "==", userId);
-  const cartsSnapshot = await cartsRef.get();
+  const cartsRef = query(
+    collection(firestore, "carts"),
+    where("userId", "==", userId),
+    limit(1)
+  );
+  const cartSnapshot = await getDocs(cartsRef);
 
-  if (cartsSnapshot.empty) {
-    const newCartDocRef = firestore.collection("carts").doc();
-    await newCartDocRef.set({userId, cartItems: []});
+  if (cartSnapshot.empty) {
+    const newCartDocRef = doc(collection("carts"));
+    await setDoc(newCartDocRef, { userId, cartItems: [] });
     return newCartDocRef;
   }
-  return cartsSnapshot.docs[0].ref;
+
+  return cartSnapshot.docs.at(0).ref;
 };
 
 export const getCurrentUser = () => {
@@ -97,4 +117,4 @@ export const getCurrentUser = () => {
   });
 };
 
-export default firebase;
+export default app;

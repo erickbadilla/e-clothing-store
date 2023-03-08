@@ -1,6 +1,6 @@
-import {all, call, put, select, takeLatest} from "redux-saga/effects";
+import { all, call, put, select, takeLatest } from "redux-saga/effects";
 
-import {getUserCartRef} from "../../firebase/firebase.utils";
+import { getUserCartRef } from "../../firebase/firebase.utils";
 
 import {
   clearCart,
@@ -11,10 +11,11 @@ import {
 } from "./cart.actions";
 
 import UserActionsTypes from "../user/user.types";
-import {CartActionsTypes} from "./cart.types";
+import { CartActionsTypes } from "./cart.types";
 
-import {selectCurrentUser} from "../user/user.selectors";
-import {selectCartItems} from "./cart.selectors";
+import { selectCurrentUser } from "../user/user.selectors";
+import { selectCartItems } from "./cart.selectors";
+import { getDoc, updateDoc } from "firebase/firestore";
 
 export function* updateCartInFirebase() {
   const currentUser = yield select(selectCurrentUser);
@@ -27,7 +28,7 @@ export function* updateCartInFirebase() {
   try {
     const userCartRef = yield getUserCartRef(currentUser.id);
     const cartItems = yield select(selectCartItems);
-    yield userCartRef.update({ cartItems });
+    yield updateDoc(userCartRef, { cartItems });
     yield put(updateCartInFirebaseSuccess());
   } catch (error) {
     yield put(updateCartInFirebaseFailure(error.message));
@@ -48,10 +49,10 @@ export function* onCartUpdate() {
 export function* getCartFromFirebase({ payload: currentUser }) {
   try {
     const userCartRef = yield getUserCartRef(currentUser.id);
-    const userCartSnaphot = yield userCartRef.get();
+    const userCartSnapshot = yield getDoc(userCartRef);
 
-    const userCart = userCartSnaphot.data().cartItems;
-    
+    const userCart = userCartSnapshot.data().cartItems;
+
     yield put(getCartFromFirebaseSuccess(userCart));
   } catch (error) {
     yield put(getCartFromFirebaseFailure(error.message));

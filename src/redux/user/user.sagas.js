@@ -1,4 +1,9 @@
-import {all, call, put, takeLatest} from "redux-saga/effects";
+import { all, call, put, takeLatest } from "redux-saga/effects";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 
 import UserActionsTypes from "./user.types";
 import {
@@ -10,7 +15,13 @@ import {
   signUpSuccess,
 } from "./user.actions";
 
-import {auth, createUserProfileDocument, getCurrentUser, googleProvider,} from "../../firebase/firebase.utils";
+import {
+  auth,
+  createUserProfileDocument,
+  getCurrentUser,
+  googleProvider,
+} from "../../firebase/firebase.utils";
+import { getDoc } from "firebase/firestore";
 
 export function* getSnapshotFromUserAuth(userAuth, additionalData) {
   try {
@@ -19,7 +30,7 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
       userAuth,
       additionalData
     );
-    const userSnapshot = yield userReference.get();
+    const userSnapshot = yield getDoc(userReference);
     yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
   } catch (error) {
     yield put(signInFailure(error.message));
@@ -28,7 +39,7 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
 
 export function* signInWithGoogle() {
   try {
-    const { user } = yield auth.signInWithPopup(googleProvider);
+    const { user } = yield signInWithPopup(auth, googleProvider);
     yield getSnapshotFromUserAuth(user);
   } catch (error) {
     yield put(signInFailure(error));
@@ -41,7 +52,7 @@ export function* onGoogleSignInStart() {
 
 export function* signInWithEmail({ payload: { email, password } }) {
   try {
-    const { user } = yield auth.signInWithEmailAndPassword(email, password);
+    const { user } = yield signInWithEmailAndPassword(auth, email, password);
     yield getSnapshotFromUserAuth(user);
   } catch (error) {
     yield put(signInFailure(error.message));
@@ -83,7 +94,7 @@ export function* onSignOutStart() {
 
 export function* signUp({ payload: { email, password, displayName } }) {
   try {
-    const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+    const { user } = yield createUserWithEmailAndPassword(email, password);
     yield put(
       signUpSuccess({ user, additionalData: { displayName: displayName } })
     );
