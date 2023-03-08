@@ -21,6 +21,7 @@ export function* fetchCollectionsAsync() {
       convertCollectionsSnapshotToMap,
       collectionSnap
     );
+    
     yield put(fetchCollectionsSuccess(collectionsMap));
   } catch (error) {
     yield put(fetchCollectionFailure(error.message));
