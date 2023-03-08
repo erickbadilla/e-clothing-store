@@ -21,7 +21,6 @@ export function* fetchCollectionsAsync() {
       convertCollectionsSnapshotToMap,
       collectionSnap
     );
-    console.log("entre");
     yield put(fetchCollectionsSuccess(collectionsMap));
   } catch (error) {
     yield put(fetchCollectionFailure(error.message));
